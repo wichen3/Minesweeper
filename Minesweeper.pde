@@ -22,15 +22,11 @@ void setup ()
             setBombs();
         }
     }
-    
-    
-    
-    setBombs();
 }
 public void setBombs()
 {
-    int ranRow = (int)(Math.random()*20);
-    int ranCol = (int)(Math.random()*20);
+    int ranRow = (int)(Math.random()*NUM_ROWS);
+    int ranCol = (int)(Math.random()*NUM_COLS);
     if(!bombs.contains(buttons[ranRow][ranCol]))
     {
         bombs.add(buttons[ranRow][ranCol]);
@@ -50,7 +46,7 @@ public boolean isWon()
 }
 public void displayLosingMessage()
 {
-    //your code here
+    background(0);
 }
 public void displayWinningMessage()
 {
@@ -89,7 +85,22 @@ public class MSButton
     public void mousePressed () 
     {
         clicked = true;
-        //your code here
+        if(keyPressed == true)
+        {
+            marked = true;
+        }
+        else if(marked == false)
+        {
+            clicked = false;
+        }
+        else if(bombs.contains(buttons[r][c]))
+        {
+            displayLosingMessage();
+        }
+        else if(countBombs(r,c) > 0)
+        {
+            buttons[r][c].setLabel("2");
+        }
     }
 
     public void draw () 
@@ -113,16 +124,32 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        
-        return false;
+        if(r < NUM_ROWS && r >= 0 && c < NUM_COLS && c >= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     public int countBombs(int row, int col)
     {
         int numBombs = 0;
-        //your code here
+        for(int rowAbove = row - 1; rowAbove < row + 1; rowAbove++)
+        {
+            for(int colBefore = col - 1; colBefore < col + 1; colBefore++)
+            {
+                if(isValid(rowAbove, colBefore))
+                {
+                    if(bombs.contains(buttons[rowAbove][colBefore]))
+                    {
+                        numBombs = numBombs + 1;
+                    }
+                }
+            }
+        }
         return numBombs;
     }
 }
-
-
 
