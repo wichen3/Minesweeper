@@ -14,9 +14,9 @@ void setup ()
     // make the manager
     Interactive.make( this );
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
-    for(int rows = 0; rows < 20; rows++)
+    for(int rows = 0; rows < NUM_ROWS; rows++)
     {
-        for(int cols = 0; cols < 20; cols++)
+        for(int cols = 0; cols < NUM_COLS; cols++)
         {
             buttons[rows][cols] = new MSButton(rows,cols);
             setBombs();
@@ -30,15 +30,18 @@ public void setBombs()
     if(!bombs.contains(buttons[ranRow][ranCol]))
     {
         bombs.add(buttons[ranRow][ranCol]);
+
     }
 }
 
 public void draw ()
 {
     background( 0 );
-    if(isWon())
-        displayWinningMessage();
+     if(isWon())
+         displayWinningMessage();
 }
+
+
 public boolean isWon()
 {
     //your code here
@@ -46,7 +49,7 @@ public boolean isWon()
 }
 public void displayLosingMessage()
 {
-    background(0);
+    //your code here
 }
 public void displayWinningMessage()
 {
@@ -84,14 +87,13 @@ public class MSButton
     
     public void mousePressed () 
     {
-        clicked = true;
+        if(keyPressed == false)
+        {
+            clicked = true;
+        }
         if(keyPressed == true)
         {
-            marked = true;
-        }
-        else if(marked == false)
-        {
-            clicked = false;
+            marked = !marked;
         }
         else if(bombs.contains(buttons[r][c]))
         {
@@ -99,7 +101,11 @@ public class MSButton
         }
         else if(countBombs(r,c) > 0)
         {
-            buttons[r][c].setLabel("2");
+            setLabel((str(countBombs(NUM_ROWS, NUM_COLS))));
+        }
+        else
+        {
+
         }
     }
 
