@@ -7,10 +7,11 @@ public static final int NUM_COLS = 25;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton> (); //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
+int activeBombs = 70;
 
 void setup ()
 {
-    size(400,450);
+    size(400,475);
     textAlign(CENTER,CENTER);
     // make the manager
     Interactive.make( this );
@@ -20,19 +21,20 @@ void setup ()
         for(int cols = 0; cols < NUM_COLS; cols++)
         {
             buttons[rows][cols] = new MSButton(rows,cols);
-            setBombs();
         }
+    }
+    for(int i = 0; i < activeBombs; i ++)
+    {
+        setBombs();
     }
 }
 public void setBombs()
 {
     int ranRow = (int)(Math.random()*NUM_ROWS);
     int ranCol = (int)(Math.random()*NUM_COLS);
-    int readyBomb = 0;
-    if(!bombs.contains(buttons[ranRow][ranCol]) && readyBomb <= 50 )
+    if(!bombs.contains(buttons[ranRow][ranCol]))
     {
         bombs.add(buttons[ranRow][ranCol]);
-        readyBomb++;
     }
 }
 
@@ -50,6 +52,14 @@ public void draw ()
 
 public boolean isWon()
 {
+    for (int i = 0; i < bombs.size(); i++)
+    {
+        if(bombs.get(i).isMarked() == true)
+        {
+            gameOver = true;
+            return true;
+        }
+    }
     return false;
 }
 public void displayLosingMessage()
@@ -61,12 +71,11 @@ public void displayLosingMessage()
             bombs.get(i).clicked = true;
         }
     }
-    gameOver = true;
+    background(0);
 }
 public void displayWinningMessage()
 {
-    //your code here
-    gameOver = true;
+    background(0);
 }
 
 public class MSButton
