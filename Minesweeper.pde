@@ -7,7 +7,7 @@ public static final int NUM_COLS = 25;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton> (); //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
-int activeBombs = 70;
+int activeBombs = 1;
 
 void setup ()
 {
@@ -47,6 +47,21 @@ public void draw ()
             displayWinningMessage();
         }
     }
+    if(keyPressed && key == ENTER)
+    {
+        for(int rows = 0; rows < NUM_ROWS; rows++)
+        {
+            for(int cols = 0; cols < NUM_COLS; cols++)
+            {
+                buttons[rows][cols] = new MSButton(rows,cols);
+            }
+        }
+        for(int i = 0; i < activeBombs; i ++)
+        {
+            setBombs();
+        }
+        gameOver = false;
+    }
 }
 
 
@@ -66,16 +81,16 @@ public void displayLosingMessage()
 {
     for (int i = 0; i < bombs.size(); i++)
     {
-        if (bombs.get(i).isMarked() == false)
+        if (bombs.get(i).isClicked() == false)
         {
             bombs.get(i).clicked = true;
         }
     }
-    background(0);
+    
 }
 public void displayWinningMessage()
 {
-    background(0);
+    background(255);
 }
 
 public class MSButton
@@ -113,7 +128,7 @@ public class MSButton
         {
             clicked = true;
         }
-        if(keyPressed == true)
+        if(keyPressed == true && key == 'a')
         {
             marked = !marked;
         }
