@@ -1,18 +1,19 @@
 
 
 import de.bezier.guido.*;
-//Declare and initialize NUM_ROWS and NUM_COLS = 20
+//Declare and initialize NUM_ROWS and NUM_COLS = 25
 public static final int NUM_ROWS = 25;
 public static final int NUM_COLS = 25;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton> (); //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
-int activeBombs = 5;
+int activeBombs = 5; //Number of bombs =  difficulty of game
 
 void setup ()
 {
-    size(400,475);
+    size(400,400);
     textAlign(CENTER,CENTER);
+    gameOver = false;
     // make the manager
     Interactive.make( this );
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
@@ -23,6 +24,7 @@ void setup ()
             buttons[rows][cols] = new MSButton(rows,cols);
         }
     }
+    bombs = new ArrayList <MSButton>();
     for(int i = 0; i < activeBombs; i ++)
     {
         setBombs();
@@ -40,48 +42,27 @@ public void setBombs()
 
 public void draw ()
 {
-    if(gameOver == false)
+    if(!gameOver && isWon())
     {
-        if(isWon())
-        {
-            displayWinningMessage();
-        }
+         displayWinningMessage();
     }
     if(keyPressed && key == ENTER)
     {
-        for(int rows = 0; rows < NUM_ROWS; rows++)
-        {
-            for(int cols = 0; cols < NUM_COLS; cols++)
-            {
-                buttons[rows][cols] = new MSButton(rows,cols);
-            }
-        }
-        for(int i = 0; i < activeBombs; i ++)
-        {
-            setBombs();
-        }
-        gameOver = false;
+        setup();
     }
 }
 
 
 public boolean isWon()
 {
-    int markedBombs = 0;
-    for (int i = 0; i < bombs.size(); i++)
-    {
-        if(bombs.get(i).isMarked() == true)
-        {
-            markedBombs = markedBombs + 1;
-            if(markedBombs == activeBombs)
-            {
-                gameOver = true;
-                return true;
-            }
-        }
+  for (int i =0; i< bombs.size (); i++) {
+    if (bombs.get(i).isMarked() == false) {
+      return false;
     }
-    return false;
+  }
+  return true;
 }
+
 public void displayLosingMessage()
 {
     for (int i = 0; i < bombs.size(); i++)
@@ -91,13 +72,25 @@ public void displayLosingMessage()
             bombs.get(i).clicked = true;
         }
     }
-    text("YOU LOST", 200, 430);
-    
+    buttons[12][11].setLabel("Y");
+    buttons[12][12].setLabel("O");
+    buttons[12][13].setLabel("U");
+    buttons[12][14].setLabel(" ");
+    buttons[12][15].setLabel("L");
+    buttons[12][16].setLabel("O");
+    buttons[12][17].setLabel("S");
+    buttons[12][18].setLabel("T");
 }
+
 public void displayWinningMessage()
 { 
-
-    text("YOU WIN", 200, 430);
+    buttons[12][11].setLabel("Y");
+    buttons[12][12].setLabel("O");
+    buttons[12][13].setLabel("U");
+    buttons[12][14].setLabel(" ");
+    buttons[12][15].setLabel("W");
+    buttons[12][16].setLabel("I");
+    buttons[12][17].setLabel("N");
 }
 
 public class MSButton
@@ -127,14 +120,10 @@ public class MSButton
     {
         return clicked;
     }
-    // called by manager
     
     public void mousePressed () 
     {
-        if(keyPressed == false)
-        {
-            clicked = true;
-        }
+        clicked = true;
         if(keyPressed == true)
         {
             marked = !marked;
