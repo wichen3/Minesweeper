@@ -7,12 +7,15 @@ public static final int NUM_COLS = 25;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton> (); //ArrayList of just the minesweeper buttons that are mined
 private boolean gameOver = false;
-int activeBombs = 5; //Number of bombs =  difficulty of game
+int activeBombs = 10; //Number of bombs =  difficulty of game
 
 void setup ()
 {
-    size(400,400);
+    size(400,450);
     textAlign(CENTER,CENTER);
+    background(230);
+    fill(0);
+    text("Number of Mines: "+ activeBombs,200,425);
     gameOver = false;
     // make the manager
     Interactive.make( this );
@@ -52,6 +55,22 @@ public void draw ()
     }
 }
 
+public void keyTyped() 
+{
+    if(key == 'i')
+    {
+        if(activeBombs < 100)
+        {
+            activeBombs = activeBombs + 10;   
+        }
+        setup();
+    }
+    if(key == 'u')
+    {
+        activeBombs = 10;
+        setup();
+    }
+}
 
 public boolean isWon()
 {
@@ -131,6 +150,7 @@ public class MSButton
         else if(bombs.contains(buttons[r][c]))
         {
             displayLosingMessage();
+            gameOver = true;
         }
         else if(countBombs(r,c) > 0)
         {
