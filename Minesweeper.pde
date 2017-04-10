@@ -142,7 +142,11 @@ public class MSButton
     
     public void mousePressed () 
     {
-        clicked = true;
+    if(!gameOver && !isWon()){
+        if(keyPressed == false)
+        {
+            clicked = true;
+        }
         if(keyPressed == true)
         {
             marked = !marked;
@@ -169,6 +173,7 @@ public class MSButton
                 }
             }
         }
+    }
     }
 
     public void draw () 
