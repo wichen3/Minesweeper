@@ -20,6 +20,7 @@ void setup ()
     // make the manager
     Interactive.make( this );
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
+    bombs = new ArrayList <MSButton>();
     for(int rows = 0; rows < NUM_ROWS; rows++)
     {
         for(int cols = 0; cols < NUM_COLS; cols++)
@@ -27,7 +28,6 @@ void setup ()
             buttons[rows][cols] = new MSButton(rows,cols);
         }
     }
-    bombs = new ArrayList <MSButton>();
     for(int i = 0; i < activeBombs; i ++)
     {
         setBombs();
@@ -59,7 +59,7 @@ public void keyTyped()
 {
     if(key == 'i')
     {
-        if(activeBombs < 100)
+        if(activeBombs < 80)
         {
             activeBombs = activeBombs + 10;   
         }
@@ -91,25 +91,25 @@ public void displayLosingMessage()
             bombs.get(i).clicked = true;
         }
     }
-    buttons[12][11].setLabel("Y");
-    buttons[12][12].setLabel("O");
-    buttons[12][13].setLabel("U");
-    buttons[12][14].setLabel(" ");
-    buttons[12][15].setLabel("L");
-    buttons[12][16].setLabel("O");
-    buttons[12][17].setLabel("S");
-    buttons[12][18].setLabel("T");
+    buttons[12][9].setLabel("Y");
+    buttons[12][10].setLabel("O");
+    buttons[12][11].setLabel("U");
+    buttons[12][12].setLabel(" ");
+    buttons[12][13].setLabel("L");
+    buttons[12][14].setLabel("O");
+    buttons[12][15].setLabel("S");
+    buttons[12][16].setLabel("T");
 }
 
 public void displayWinningMessage()
 { 
-    buttons[12][11].setLabel("Y");
-    buttons[12][12].setLabel("O");
-    buttons[12][13].setLabel("U");
-    buttons[12][14].setLabel(" ");
-    buttons[12][15].setLabel("W");
-    buttons[12][16].setLabel("I");
-    buttons[12][17].setLabel("N");
+    buttons[12][9].setLabel("Y");
+    buttons[12][10].setLabel("O");
+    buttons[12][11].setLabel("U");
+    buttons[12][12].setLabel(" ");
+    buttons[12][13].setLabel("W");
+    buttons[12][14].setLabel("I");
+    buttons[12][15].setLabel("N");
 }
 
 public class MSButton
